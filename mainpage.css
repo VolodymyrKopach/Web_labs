@@ -1,9 +1,4 @@
 /* задаем цвет фона для контейнера nav. */
-nav {
-    margin: 0 0;
-    position: relative;
-    background-color: black;
-}
 
 /* убираем отступы и поля, а также list-style для "ul",
  * и добавляем "position:relative" */
@@ -15,11 +10,7 @@ nav ul {
 }
 
 /* применяем inline-block позиционирование к элементам навигации */
-nav ul li {
-    margin: 0px -7px 0 0;
-    display:inline-block;
-    background-color: black;
-}
+
 
 /* стилизуем ссылки */
 nav a {
@@ -64,16 +55,6 @@ nav ul ul li {
     text-align: center;
 }
 
-#main_content {
-	padding-top: 50px;
-	font-family: "Verdana"
-}
-
-#main_img{
-    width: 100%;
-    height: 40%;
-}
-
 .footer {
     position: relative;
     left: 0;
@@ -94,8 +75,6 @@ nav ul ul li {
 }
 
 #logo {
-    display: inline-block;
-	float: right;
     width: 45px;
     height: 45px;
     border-radius: 120px;
@@ -153,7 +132,7 @@ h1,h2 {
   }
   @keyframes slider{
     from {
-      margin-left: 100%;
+      margin-left: 75%;
       width: 100%; 
     }
 
