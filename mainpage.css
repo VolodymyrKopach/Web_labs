@@ -102,6 +102,15 @@ nav ul ul li {
     font-size:12px;
 }
 
+.nickname_in_fans{
+    font-size:16px;
+    font-weight: bold;
+}
+
+.date_of_post_in_fans{
+    font-size:16px;
+}
+
 .my_flex_container {
     display:inline-flex;
     width: 100%;

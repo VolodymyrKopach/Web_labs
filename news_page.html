@@ -4,38 +4,61 @@
     <meta charset="utf-8">
     <title>Parkour</title>
     <link rel="stylesheet" type="text/css" href="mainpage.css">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+            crossorigin="anonymous">
+    </script>
 </head>
 <body>
 
-<nav>
+<nav style="background-color: #000000;" class="navbar navbar-dark navbar-expand-md col-lg-12 col-md-12">
 
-    <img id="logo" src="img_icon.jpg"  alt="icon">
-    <ul class="menu">
-    <li>
-        <a href="index.html">Main</a>
-    </li>
-    <li>
-        <a href=>Matches</a>
-        <ul class="submenu">
-            <li><a href=#>Videos</a></li>
-            <li><a href=#>Photos</a></li>
+    <button class="navbar-toggler navbar-toggler-right collapsed" type="button" data-toggle="collapse"
+            data-target="#navbarNav">
+        <span class="navbar-toggler-icon "></span>
+    </button>
+
+    <div class="col-lg-11 col-md-9 collapse navbar-collapse" id="navbarNav">
+        <ul class="nav navbar-nav">
+            <li class="nav-item">
+                <a href="index.html">Main</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href=#>Matches</a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="calendar_of_matches.html">Calendar of matches</a></li>
+                    <li><a class="dropdown-item" href=#>Photos</a></li>
+                </ul>
+            </li>
+            <li class="nav-item"><a href="news_page.html">News</a>
+
+            </li>
+            <li class="nav-item"><a href="fans.html">Fans</a>
+
+            </li>
+            <li class="nav-item"><a href="contacts.html">Contacts</a>
+
+            </li>
+            <li class="nav-item"><a href="admin.html">Admin</a>
+
+            </li>
         </ul>
-    </li>
-    <li><a href="news_page.html">News</a>
-        
-    </li>
-    <li><a href=#>Fans</a>
-        
-    </li>
-    <li><a href=#>Contacts</a>
-        
-    </li>
-    <li><a href=#>Admin</a>
-       
-    </li>
-</ul>
+    </div>
 
-
+    <div >
+        <img id="logo" class="pull-lg-right" src="img_icon.jpg" alt="icon">
+    </div>
 
 </nav>
 
