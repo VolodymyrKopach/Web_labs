@@ -1,0 +1,24 @@
+CACHE MANIFEST
+# version 1.0
+
+CACHE:
+bootstrap/js/bootstrap.min.js
+bootstrap/js/bootstrap.min.js.map
+bootstrap/css/bootstrap.min.css
+bootstrap/css/bootstrap.min.css.map
+calendar_of_matches.html
+contacts.html
+fans.html
+img_icon.jpg
+index.html
+css/mainpage.css
+news_page.html
+
+FALLBACK:
+admin.html /error.html
+
+NETWORK:
+*
+
+
+
