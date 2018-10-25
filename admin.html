@@ -3,6 +3,9 @@
 <head>
     <title>Fans</title>
     <meta charset="utf-8">
+
+    <script src="js/js_file.js"></script>
+
     <link rel="stylesheet" type="text/css" href="css/mainpage.css">
 
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
@@ -52,13 +55,13 @@
 
     <div class="container mt-3">
         <div class="">
-        <div class="fileupload fileupload-new col-lg-4" data-provides="fileupload">
+            <div class="fileupload fileupload-new col-lg-4" data-provides="fileupload">
             <span class="btn btn-file btn-secondary"><span class="fileupload-new">Select image</span>
                 <input type="file"/></span>
-        </div>
-        <div class="col-lg-4 mb-3 mt-2">
-            <button type="submit" class="btn btn-primary">Add image</button>
-        </div>
+            </div>
+            <div class="col-lg-4 mb-3 mt-2">
+                <button type="submit" class="btn btn-primary">Add image</button>
+            </div>
         </div>
     </div>
     </div>
@@ -66,19 +69,20 @@
     </form>
 
     <div class="container mb-5">
-        <form>
-            <div class="col-lg-4">
-                <div>
-                    <input style="height: 50px;width: 100%" placeholder="News title">
-                </div>
-                <div class="mt-3">
-                    <textarea name="comment" cols="40" rows="3" style="height: 200px;width: 100%"
-                              placeholder="News text"></textarea>
-                </div>
+        <form name="admin_form">
+            <div  id="news_title_id" >
+                <textarea name="news_title" class="mb-2 form-control" size=80 style="height: 50px;width: 100%"
+                          placeholder="News title"></textarea>
             </div>
-            <div class="col-lg-4 mt-3">
-                <button class="btn btn-primary form-control input-lg" type="submit">Add news</button>
+            <div id="comment_id">
+                <textarea name="comment" class="form-control" cols="40" rows="3" style="height: 200px;width: 100%"
+                          placeholder="News text"></textarea>
             </div>
+            <div class="mt-3">
+                <button class="btn btn-primary form-control input-lg" type="button" id="button_send_news" onclick="return addNews()">Add news
+                </button>
+            </div>
+
         </form>
     </div>
 

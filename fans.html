@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="css/mainpage.css">
 
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <script src="js/js_file.js"></script>
 </head>
 <body>
 <container>
@@ -50,12 +51,10 @@
 
     </nav>
 
-    <div class="container d-flex align-content-end flex-wrap">
-        <div class="row">
+    <div class="container d-flex align-content-end flex-wrap" id="appeals_container">
+        <div class="row" id="appeals">
             <div class="card col-sm-12 col-lg-12 mt-3">
                 <div class="card-body">
-                    <h5 class="card-title">Перед тем как научиться летать, сначала научись падать и
-                        приземляться.</h5>
                     <p class="card-text">Если ты новичок, не стоит сразу пытаться прыгать с большой высоты. Чтобы
                         прыгать с высоты, мало просто научиться выполнять ролл или лэндинг. Нужно, чтобы связки
                         стали более эластичными, нужно подкачать мышцы вокруг суставов. Ведь любой прыжок - это
@@ -63,39 +62,37 @@
                         высоты более 1,5 метров, а интенсивнее заниматься общефизической подготовкой (ОФП) и
                         осваивать техники приземлений.</p>
                     <div class="row">
-                        <div class="date_of_post_in_fans col-md-3">10.09.2018, 12:31</div>
+                        <div class="date_of_post_in_fans col-md-3">10.09.2018</div>
                         <div class="nickname_in_fans col-md-3 col-md-offset">Runner1</div>
                     </div>
                 </div>
             </div>
 
-            <div class="card col-sm-12 col-lg-12 mt-3">
-                <div class="card-body">
-                    <h5 class="card-title">Правило о сгибании коленей.</h5>
+            <div class="card col-sm-12 col-lg-12 mt-3" id="appeal">
+                <div class="card-body" >
                     <p class="card-text">Звучит так: "Максимально допустимое сгибание коленного сустава под нагрузкой не
                         должно превышать величину прямого угла (90 градусов)". При любом прыжке не следует сильно
                         сгибать колени, но и на прямые ноги прыгать нельзя. К тому же, чтобы избежать травм, не следует
                         скручивать колени под нагрузкой.</p>
                     <div class="row">
-                        <div class="date_of_post_in_fans col-md-3">22.02.2018, 11:27</div>
+                        <div class="date_of_post_in_fans col-md-3">22.02.2018</div>
                         <div class="nickname_in_fans col-md-3 col-md-offset">Runner43783</div>
                     </div>
                 </div>
             </div>
-
-            <form>
-                <div class="row mt-5 mb-5">
-                    <div >
-                        <textarea class="form-control" placeholder="Your message.."></textarea>
-                    </div>
-                    <div    >
-                        <button type="submit" class="btn btn-primary">Send</button>
-                    </div>
-                </div>
-
-            </form>
-
         </div>
+
+        <div id="divv">
+            <form class="form-inline mt-4 mb-2" name="fan_appeal_form" method="post" id="fan_appeal_form_id">
+
+                <div class="form-inline">
+                    <textarea class="form-control" rows="5" cols="60" name="message_text" placeholder="Your message.." id="input_text_area"></textarea>
+
+                    <button class="btn btn-primary ml-4" type="button" onclick="addFanAppeal()">Send</button>
+                </div>
+            </form>
+        </div>
+
     </div>
 
 
