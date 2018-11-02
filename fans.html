@@ -3,10 +3,16 @@
 <head>
     <title>Fans</title>
     <meta charset="utf-8">
+
+    <!--<script src="js/fans.js"></script>-->
+    <script src="js/js_file.js"></script>
+    <script src="js/fans.js"></script>
+
+
     <link rel="stylesheet" type="text/css" href="css/mainpage.css">
 
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
-    <script src="js/js_file.js"></script>
+
 </head>
 <body>
 <container>
@@ -69,7 +75,7 @@
             </div>
 
             <div class="card col-sm-12 col-lg-12 mt-3" id="appeal">
-                <div class="card-body" >
+                <div class="card-body">
                     <p class="card-text">Звучит так: "Максимально допустимое сгибание коленного сустава под нагрузкой не
                         должно превышать величину прямого угла (90 градусов)". При любом прыжке не следует сильно
                         сгибать колени, но и на прямые ноги прыгать нельзя. К тому же, чтобы избежать травм, не следует
@@ -86,9 +92,10 @@
             <form class="form-inline mt-4 mb-2" name="fan_appeal_form" method="post" id="fan_appeal_form_id">
 
                 <div class="form-inline">
-                    <textarea class="form-control" rows="5" cols="60" name="message_text" placeholder="Your message.." id="input_text_area"></textarea>
+                    <textarea class="form-control" rows="5" cols="60" name="message_text" placeholder="Your message.."
+                              id="input_text_area"></textarea>
 
-                    <button class="btn btn-primary ml-4" type="button" onclick="addFanAppeal()">Send</button>
+                    <button class="btn btn-primary ml-4" type="button" id="btn_send_fan_appeal" onclick="addFanAppeal()">Send</button>
                 </div>
             </form>
         </div>
@@ -102,7 +109,10 @@
         </div>
 
     </footer>
+
 </container>
 
 </body>
+
+
 </html>

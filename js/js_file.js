@@ -1,67 +1,136 @@
 "use strict";
 
+window.addEventListener('load', function () {
+
+    window.addEventListener('online', updateOnlineStatus);
+    window.addEventListener('offline', updateOnlineStatus);
+
+    function updateOnlineStatus(event) {
+        // add logic
+        if (event.type === 'online') {
+            if (localStorage.getItem('news') === null) {
+                console.log('no item to load')
+            } else {
+                var unsavedItem = localStorage.getItem('news');
+                sendDataToServer(unsavedItem);
+                localStorage.removeItem('news')
+            }
+        } else {
+
+        }
+    }
+
+});
+
+
+function saveNewsToLocalStorage(newsObject) {
+    localStorage.setItem('news', JSON.stringify(newsObject));
+
+    alert("SAVE NEWS TO LOCAL STORAGE")
+
+    // var retrievedObject = JSON.parse(localStorage.getItem('news'));
+    // console.log('saved to local storage');
+    // console.log('news: ', retrievedObject);
+}
+
+function saveAppealToLocalStorage(appealText) {
+    localStorage.setItem('fan_appeal', appealText);
+    alert("SAVE APPEAL TO LOCAL STORAGE")
+}
+
+
+
 function addNews() {
+    alert("btnSendNews.onclick");
     var elements = document.forms["admin_form"].elements;
     var add_title = false;
     var add_description = false;
 
 
+
     var title_input = document.getElementById("news_title_id");
     resetError(elements.news_title.parentNode);
-    if (elements.news_title.value === "" || elements.news_title.value === " ") {
+
+    var comment_id = document.getElementById("news_comment_id");
+    resetError(elements.comment.parentNode);
+    if (elements.news_title.value.trim() !== "" && elements.comment.value.trim() !== "") {
+
+
+        var newsObject = {
+            "news_title": elements.news_title.value,
+            "news_comment": elements.comment.value
+        };
+
+        if(isOnline()) {
+            // console.log('online!');
+            sendDataToServer(newsObject);
+        } else {
+            saveNewsToLocalStorage(newsObject);
+            // console.log('offline!');
+        }
+
+
+
+        title_input.innerHTML = ' <textarea name="news_title" class="mb-2 form-control" size=80 style="height: 50px;width: 100%"\n' +
+            '                       placeholder="News title">' + elements.news_title.value + '</textarea>\n';
+        add_title = true;
+
+        comment_id.innerHTML = '<textarea name="comment" class="form-control" cols="40" rows="3" style="height: 200px;width: 100%"\n' +
+            '                          placeholder="News text">' + elements.comment.value + '</textarea>';
+        add_description = true;
+
+
+    }
+
+    if (elements.news_title.value.trim() === "") {
+
         title_input.innerHTML = '<textarea name="news_title" class="mb-2 form-control is-invalid" size=80 style="height: 50px;width: 100%"\n' +
             '                       placeholder="News title"></textarea>';
 
         showError(elements.news_title.parentNode, "Введіть заголовок новини");
-    } else {
-        title_input.innerHTML = ' <textarea name="news_title" class="mb-2 form-control" size=80 style="height: 50px;width: 100%"\n' +
-            '                       placeholder="News title">'+ elements.news_title.value + '</textarea>\n';
-        add_title = true;
+
     }
 
-    var comment_id = document.getElementById("comment_id");
-    resetError(elements.comment.parentNode);
-    if (elements.comment.value === "" || elements.comment.value === " ") {
+    if (elements.comment.value.trim() === ""){
         comment_id.innerHTML = '<textarea name="comment" class="form-control is-invalid" cols="40" rows="3" style="height: 200px;width: 100%"\n' +
             '                          placeholder="News text"></textarea>';
+
         showError(elements.comment.parentNode, "Введіть текст новини");
-    } else {
-        comment_id.innerHTML = '<textarea name="comment" class="form-control" cols="40" rows="3" style="height: 200px;width: 100%"\n' +
-            '                          placeholder="News text">' + elements.comment.value + '</textarea>';
-        add_description = true;
     }
 
     if (add_title && add_description) {
         //setDefaultForm();
         elements.comment.value = "";
         elements.news_title.value = "";
-     //   document.forms["admin_form"].reset();
+        //   document.forms["admin_form"].reset();
         alert("Новину додано");
-        return true;
-    }else {
-        return false;
+    } else {
     }
+
+    return true;
 
 }
 
 function addFanAppeal() {
+    alert("btnAddFanAppeal.onclick");
+    console.log("btnAddFanAppeal.onclick");
 
-    var fail = false;
     var text = document.forms["fan_appeal_form"]["message_text"].value;
 
-    var currentDate = getCurrentDate();
-
-    if (text === "" || text === " ") {
-        fail = true
-    }
-
-    if (fail) {
+    if (text.trim() === "") {
         alert("Введіть ваше звернення")
+
     } else {
-        if (isOnline()){
-            localStorage.setItem('appeal_1', text);
+        if (isOnline()) {
+            sendDataToServer();
+            readDataWithServer();
+
+        } else {
+            saveAppealToLocalStorage(text);
         }
-        
+
+        var currentDate = getCurrentDate();
+
         var pzk = document.getElementById("appeals");
         pzk.innerHTML += " <div class=\"card col-sm-12 col-lg-12 mt-3\" id=\"appeal\">\n" +
             "                <div class=\"card-body\" >\n" +
@@ -98,6 +167,14 @@ function getCurrentDate() {
     return datetime
 }
 
+function sendDataToServer() {
+
+}
+
+function readDataWithServer() {
+
+}
+
 
 function showError(container, errorMessage) {
     container.className = 'error';
@@ -114,7 +191,8 @@ function resetError(container) {
     }
 }
 
-function isOnline(){
+
+function isOnline() {
     return window.navigator.onLine;
 }
 
