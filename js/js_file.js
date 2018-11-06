@@ -1,5 +1,92 @@
 "use strict";
 
+var useLocalStorage = false;
+
+function saveAppealToIndexedDB(appeal) {
+    var db;
+    alert('saveAppealToIndexedDB');
+    var openRequest = indexedDB.open("parkour_site_db",3);
+
+    openRequest.onupgradeneeded = function(e) {
+        var thisDB = e.target.result;
+
+        if(!thisDB.objectStoreNames.contains("appeal")) {
+            thisDB.createObjectStore("appeal", {autoIncrement:true});
+        }
+
+        alert('onupgradeneeded')
+    };
+
+    openRequest.onsuccess = function(e) {
+        alert("Running indexedDb success");
+
+        db = e.target.result;
+
+
+        var transaction = db.transaction(["appeal"],"readwrite");
+        var store = transaction.objectStore("appeal");
+
+        var request = store.add(appeal);
+
+        request.onerror = function(e) {
+            console.log("Error",e.target.error.name);
+        };
+
+        request.onsuccess = function(e) {
+            console.log("Added appeal success");
+        };
+    };
+
+    openRequest.onerror = function(e) {
+        alert('Running indexedDb error: ' + e)
+    };
+
+    db.close();
+}
+
+
+function saveNewsToIndexedDB(newsObj) {
+    var db;
+    alert('saveAppealToIndexedDB');
+    var openRequest = indexedDB.open("parkour_site_db",3);
+
+    openRequest.onupgradeneeded = function(e) {
+        var thisDB = e.target.result;
+
+        if(!thisDB.objectStoreNames.contains("news")) {
+            thisDB.createObjectStore("news", {autoIncrement:true});
+        }
+
+        alert('onupgradeneeded')
+    };
+
+    openRequest.onsuccess = function(e) {
+        alert("Running indexedDb success");
+
+        db = e.target.result;
+
+
+        var transaction = db.transaction(["news"],"readwrite");
+        var store = transaction.objectStore("news");
+
+        var request = store.add(newsObj);
+
+        request.onerror = function(e) {
+            console.log("Error",e.target.error.name);
+        };
+
+        request.onsuccess = function(e) {
+            console.log("Added news success");
+        };
+    };
+
+    openRequest.onerror = function(e) {
+        alert('Running indexedDb error: ' + e)
+    };
+
+}
+
+
 window.addEventListener('load', function () {
 
     window.addEventListener('online', updateOnlineStatus);
@@ -61,12 +148,17 @@ function addNews() {
             "news_comment": elements.comment.value
         };
 
+        saveNewsToIndexedDB(newsObject);
+
         if(isOnline()) {
             // console.log('online!');
             sendDataToServer(newsObject);
         } else {
-            saveNewsToLocalStorage(newsObject);
-            // console.log('offline!');
+            if (useLocalStorage){
+                saveNewsToLocalStorage(newsObject);
+                // console.log('offline!');
+            }
+
         }
 
 
@@ -116,6 +208,11 @@ function addFanAppeal() {
     console.log("btnAddFanAppeal.onclick");
 
     var text = document.forms["fan_appeal_form"]["message_text"].value;
+    //Тимчасово
+    alert("Дойшло");
+    saveAppealToIndexedDB(text);
+    alert('після');
+
 
     if (text.trim() === "") {
         alert("Введіть ваше звернення")
@@ -126,7 +223,13 @@ function addFanAppeal() {
             readDataWithServer();
 
         } else {
-            saveAppealToLocalStorage(text);
+            if (useLocalStorage){
+                saveAppealToLocalStorage(text);
+            } else {
+                alert('else');
+                saveAppealToIndexedDB(text)
+            }
+
         }
 
         var currentDate = getCurrentDate();
