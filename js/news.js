@@ -35,13 +35,16 @@ function getNewsFromLocalStorage() {
 
 function getAllNewsFromIndexedDb() {
     var db;
-    var openRequest = indexedDB.open("parkour_site_db",3);
+    var openRequest = indexedDB.open("parkour_site_db",1);
 
     openRequest.onupgradeneeded = function(e) {
-        var thisDB = e.target.result;
+        db = e.target.result;
 
-        if(!thisDB.objectStoreNames.contains("news")) {
-            thisDB.createObjectStore("news", {autoIncrement:true});
+        if(!db.objectStoreNames.contains("news")) {
+            var objectStore = db.createObjectStore("news", {autoIncrement:true});
+
+            objectStore.createIndex("news_title", "news_title", { unique: false });
+            objectStore.createIndex("news_comment", "news_comment", { unique: false });
         }
 
         alert('onupgradeneeded')
@@ -53,15 +56,18 @@ function getAllNewsFromIndexedDb() {
 
         var s = "";
 
-        db.transaction(["news"], "readonly").objectStore("news").openCursor().onsuccess = function(e) {
+        var transaction = db.transaction(["news"], "readonly");
+
+        transaction.objectStore("news").openCursor().onsuccess = function(e) {
             var cursor = e.target.result;
 
             var pzk = document.getElementById("appeals");
 
             if(cursor) {
 
-                for(var i in cursor.value) {
-                    var news = cursor.value[i];
+                // for(var i in cursor.value) {
+                    var news = cursor.value.news_title;
+                    alert(news);
 
                     var pzk = document.getElementById("my_flex_container_id");
                     var my_news = " <div class=\"card col-sm-12 col-lg-12 mt-3\" id=\"appeal\">\n" +
@@ -73,14 +79,17 @@ function getAllNewsFromIndexedDb() {
                         "                    </div>\n" +
                         "                </div>\n" +
                         "            </div>";
-                    pzk.innerHTML += my_news
+                    pzk.innerHTML += my_news;
 
-
-
-                }
                 cursor.continue();
-            }
-        }
+                }
+
+            };
+
+         transaction.oncomplete = function(){
+             db.close();
+         }
+        // }
 
     };
 

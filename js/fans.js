@@ -31,14 +31,18 @@ function getAppealFromLocalStorage() {
 
 function getAllAppealFromIndexedDb() {
     var db;
-    var openRequest = indexedDB.open("parkour_site_db",3);
+    var openRequest = indexedDB.open("parkour_site_db", 2);
 
     openRequest.onupgradeneeded = function(e) {
-        var thisDB = e.target.result;
+        db = e.target.result;
 
-        if(!thisDB.objectStoreNames.contains("appeal")) {
-            thisDB.createObjectStore("appeal", {autoIncrement:true});
+        if(!db.objectStoreNames.contains("appeals")) {
+            var objectStore = db.createObjectStore("appeals", {autoIncrement:true});
+
+            objectStore.createIndex("appeal", "appeal", { unique: false });
         }
+
+
 
         alert('onupgradeneeded')
     };
@@ -49,7 +53,9 @@ function getAllAppealFromIndexedDb() {
 
         var s = "";
 
-        db.transaction(["appeal"], "readonly").objectStore("appeal").openCursor().onsuccess = function(e) {
+        var transaction = db.transaction(["appeals"], "readonly");
+
+        transaction.objectStore("appeals").openCursor().onsuccess = function(e) {
             var cursor = e.target.result;
 
             var pzk = document.getElementById("appeals");
@@ -69,15 +75,17 @@ function getAllAppealFromIndexedDb() {
                 }
                 cursor.continue();
             }
-        }
+        };
+
+         transaction.oncomplete = function(){
+             db.close();
+         }
 
     };
 
     openRequest.onerror = function(e) {
         alert('Running indexedDb error: ' + e)
     };
-
-    db.close();
 }
 
 function getCurrentDate() {

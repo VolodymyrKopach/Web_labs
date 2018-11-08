@@ -5,14 +5,17 @@ var useLocalStorage = false;
 function saveAppealToIndexedDB(appeal) {
     var db;
     alert('saveAppealToIndexedDB');
-    var openRequest = indexedDB.open("parkour_site_db",3);
+    var openRequest = indexedDB.open("parkour_site_db",2);
 
     openRequest.onupgradeneeded = function(e) {
-        var thisDB = e.target.result;
+        db = e.target.result;
 
-        if(!thisDB.objectStoreNames.contains("appeal")) {
-            thisDB.createObjectStore("appeal", {autoIncrement:true});
+        if(!db.objectStoreNames.contains("appeals")) {
+            var objectStore = db.createObjectStore("appeals", {autoIncrement:true});
+
+            objectStore.createIndex("fan_appeal", "fan_appeal", { unique: false });
         }
+
 
         alert('onupgradeneeded')
     };
@@ -23,8 +26,8 @@ function saveAppealToIndexedDB(appeal) {
         db = e.target.result;
 
 
-        var transaction = db.transaction(["appeal"],"readwrite");
-        var store = transaction.objectStore("appeal");
+        var transaction = db.transaction(["appeals"],"readwrite");
+        var store = transaction.objectStore("appeals");
 
         var request = store.add(appeal);
 
@@ -35,26 +38,31 @@ function saveAppealToIndexedDB(appeal) {
         request.onsuccess = function(e) {
             console.log("Added appeal success");
         };
+
+         transaction.oncomplete = function(){
+             db.close();
+         }
     };
 
     openRequest.onerror = function(e) {
         alert('Running indexedDb error: ' + e)
     };
-
-    db.close();
 }
 
 
 function saveNewsToIndexedDB(newsObj) {
     var db;
     alert('saveAppealToIndexedDB');
-    var openRequest = indexedDB.open("parkour_site_db",3);
+    var openRequest = indexedDB.open("parkour_site_db",1);
 
     openRequest.onupgradeneeded = function(e) {
-        var thisDB = e.target.result;
+        db = e.target.result;
 
-        if(!thisDB.objectStoreNames.contains("news")) {
-            thisDB.createObjectStore("news", {autoIncrement:true});
+        if(!db.objectStoreNames.contains("news")) {
+            var objectStore = db.createObjectStore("news", {autoIncrement:true});
+
+            objectStore.createIndex("news_title", "news_title", { unique: false });
+            objectStore.createIndex("news_comment", "news_comment", { unique: false });
         }
 
         alert('onupgradeneeded')
@@ -78,6 +86,10 @@ function saveNewsToIndexedDB(newsObj) {
         request.onsuccess = function(e) {
             console.log("Added news success");
         };
+
+         transaction.oncomplete = function(){
+             db.close();
+         }
     };
 
     openRequest.onerror = function(e) {
@@ -205,13 +217,13 @@ function addNews() {
 
 function addFanAppeal() {
     alert("btnAddFanAppeal.onclick");
-    console.log("btnAddFanAppeal.onclick");
 
     var text = document.forms["fan_appeal_form"]["message_text"].value;
-    //Тимчасово
-    alert("Дойшло");
-    saveAppealToIndexedDB(text);
-    alert('після');
+    var fanAppeal = {
+        "appeal": text
+    };
+
+    saveAppealToIndexedDB(fanAppeal);
 
 
     if (text.trim() === "") {
@@ -224,10 +236,10 @@ function addFanAppeal() {
 
         } else {
             if (useLocalStorage){
-                saveAppealToLocalStorage(text);
+                saveAppealToLocalStorage(fanAppeal);
             } else {
                 alert('else');
-                saveAppealToIndexedDB(text)
+                saveAppealToIndexedDB(fanAppeal)
             }
 
         }
