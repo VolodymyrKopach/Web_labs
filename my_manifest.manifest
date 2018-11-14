@@ -9,10 +9,14 @@ bootstrap/css/bootstrap.min.css.map
 calendar_of_matches.html
 contacts.html
 fans.html
+news_page.html
 img_icon.jpg
+img_header.jpg
 index.html
 css/mainpage.css
-news_page.html
+js/fans.js
+js/js_file.js
+js/news.js
 
 FALLBACK:
 admin.html /error.html
